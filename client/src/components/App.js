@@ -1,11 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { hot } from 'react-hot-loader';
+import Game from '../components/Game'
 
 const App = () => {
   return (
     <div>
-      Welcome to the Bluebeam Web Development Homework!!
+      <Game />
     </div>
   );
 };
