@@ -9,8 +9,20 @@ class Game extends React.Component {
 		this.state = {
 		  board: Array(9).fill(null),
 		  xTurn: true,
-		  winner: null
+		  winner: null,
+		  playerOne: null,
+		  playerTwo: null
 		};
+	}
+	
+	handleStart() {
+		const newBoard = Array(9).fill(null);
+		
+		this.setState({
+			board: newBoard,
+			xTurn: true,
+			winner: null
+		});
 	}
 	
 	handleClick(i) {
@@ -51,17 +63,20 @@ class Game extends React.Component {
 	}
 	
 	render() {
-		const {winner} = this.state;		
+		const {winner, xTurn} = this.state;		
 		let status;
 		
 		if (winner) {
 		  status = "The winner is: " + winner + "!!";
 		} else {
-		  status = null;
+		  status = xTurn ? "Player X's move" : "Player O's move";
 		}
 		
 		return(
 			<div className="game">
+				<div className="game-start">
+					<button className="game-button" onClick={() => this.handleStart()}>New Game</button>
+				</div>
 				<div className="game-board">
 					<Board
 						board={this.state.board}
