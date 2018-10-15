@@ -1,7 +1,7 @@
 import React from 'react';
-//import Start  from './Start';
 import Board  from './Board';
-
+import Leaderboard  from './Leaderboard';
+import { getPlayers, updatePlayer, postPlayer } from '../services/playerService';
 
 class Game extends React.Component {
 	constructor(props) {
@@ -17,8 +17,16 @@ class Game extends React.Component {
 		  errorMessage: null,
 		  inputMode: "edit",
 		  playerOne: "",
-		  playerTwo: ""
+		  playerTwo: "",
+		  leaderboard: []
 		};
+	}
+
+	componentDidMount() {
+		getPlayers({"sort": "games.win", "order": "desc", "limit": "10"}).then((data) => {
+			this.setState({ leaderboard: data });
+		});
+
 	}
 	
 	handleStart() {
@@ -81,6 +89,7 @@ class Game extends React.Component {
 			winner: this.checkWinner(board),
 			draw: board.includes(null) ? false : true
 		});
+
 	}
 
 	checkWinner(board) {
@@ -97,7 +106,7 @@ class Game extends React.Component {
 		
 		for (let i = 0; i < winningLines.length; i++) {
 			const [a, b, c] = winningLines[i];
-			if (board[a] && board[a] === board[b] && board[a] === board[c]) {			
+			if (board[a] && board[a] === board[b] && board[a] === board[c]) {	
 			  return board[a];
 			}
 		}
@@ -112,7 +121,8 @@ class Game extends React.Component {
 			display = <>
 						<div><b>Enter the name of Player X:</b></div><div><input type="text" name="playerOne" onChange={this.handleChange} value={this.state.playerOne} /></div>
 						<div><b>Enter the name of Player O:</b></div><div><input type="text" name="playerTwo" onChange={this.handleChange} value={this.state.playerTwo} /></div>
-						<button className="save-input" onClick={() => this.handleSave()}>Save</button>
+						<br />
+						<button className="btn btn-primary" onClick={() => this.handleSave()}>Save</button>
 					  </>;
 		}
 
@@ -135,16 +145,27 @@ class Game extends React.Component {
 	}
 	
 	render() {
-		const { winner, xTurn, board, playerOne, playerTwo, errorMessage, draw } = this.state;
+		const { winner, xTurn, board, playerOne, playerTwo, errorMessage, draw, leaderboard } = this.state;
 		let playerInput = this.renderPlayerInput();
 		let playerName = this.renderPlayerName();		
 		let status;		
 
 		if (winner) {
 		  status = "The winner is: " + winner + "!!";
+
+		  if (winner == "X") {
+			updatePlayer(playerOne, "win");
+			updatePlayer(playerTwo, "loss");
+		  }
+		  else {
+			updatePlayer(playerTwo, "win");
+			updatePlayer(playerLoss, "loss")	  
+		  }			  
 		}		
 		else if (draw) {
 		  status = "The game is a draw!!";	
+		  updatePlayer(playerOne, "draw");
+		  updatePlayer(playerTwo, "draw");
 		}
 		else {
 		  status = xTurn ? "Player X's move" : "Player O's move";
@@ -152,20 +173,28 @@ class Game extends React.Component {
 		
 		return(
 			<div className="game">
-				<div className="game-start">
-					<button className="game-button" onClick={() => this.handleStart()}>New Game</button>
+				<div className="section-left">
+					<div className="game-start">
+						<button className="btn btn-primary" onClick={() => this.handleStart()}>New Game</button>
+					</div>
+					<div className="game-info">{status}</div>
+					<div className="game-board">
+						<Board
+							board={board}
+							onClick={i => this.handleClick(i)}
+						/>
+					</div>
+					<div className="game-input">
+						{errorMessage}
+						<div>{playerInput}</div>
+						<div>{playerName}</div>					
+					</div>
 				</div>
-				<div className="game-info">{status}</div>
-				<div className="game-board">
-					<Board
-						board={board}
-						onClick={i => this.handleClick(i)}
-					/>
-				</div>
-				<div className="game-input">
-					{errorMessage}
-					<div>{playerInput}</div>
-					<div>{playerName}</div>					
+				<div className="section-right">
+					<div className="leaderboard">
+						<h2>Leaderboard</h2>
+						<Leaderboard leaderboard={leaderboard} />
+					</div>
 				</div>
 			</div>
 		);

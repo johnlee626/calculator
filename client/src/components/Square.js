@@ -7,11 +7,11 @@ class Square extends React.Component {
 	}
 
 	render() {
-        return (
+        	return (
 		    <div className="game-square" onClick={() => this.props.onClick()}>
 				{this.props.value}
 			</div>
-        );
+        	);
 	}
 }
 

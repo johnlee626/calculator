@@ -1,0 +1,84 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "title": "json-server",
+      "author": "typicode"
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "body": "some comment",
+      "postId": 1
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  },
+  "players": [
+    {
+      "id": 1,
+      "username": "Bill",
+      "games": {
+        "win": 2,
+        "loss": 0,
+        "draw": 0
+      }
+    },
+    {
+      "id": 3,
+      "username": "Rachel",
+      "games": {
+        "win": 4,
+        "loss": 11,
+        "draw": 0
+      }
+    },
+    {
+      "id": 2,
+      "username": "Mike",
+      "games": {
+        "win": 1,
+        "loss": 0,
+        "draw": 0
+      }
+    },
+    {
+      "id": 4,
+      "username": "Joe",
+      "games": {
+        "win": 2,
+        "loss": 0,
+        "draw": 1
+      }
+    },
+    {
+      "username": "Robert",
+      "games": {
+        "win": 3,
+        "loss": 1,
+        "draw": 2
+      },
+      "id": 5
+    },
+    {
+      "id": 6,
+      "username": "eve",
+      "games": {
+        "win": 3,
+        "loss": 5,
+        "draw": 5
+      }
+    },
+    {
+      "id": 7,
+      "username": "adam",
+      "games": {
+        "win": 20,
+        "loss": 8,
+        "draw": 9
+      }
+    }
+  ]
+}

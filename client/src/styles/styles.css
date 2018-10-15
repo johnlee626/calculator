@@ -2,18 +2,10 @@ body {
   box-sizing: border-box;
 }
 
-.game {
-
-}
-
 .game-start {
 	width: 250px;
 	margin: 0 auto;
 	padding: 20px 0 0 0;
-}
-
-.game-button:hover, .save-input:hover {
-	cursor: pointer;
 }
 	
 .game-board {
@@ -36,7 +28,6 @@ body {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	/*padding-bottom: 10px;*/
 	color: #333;
 }
 
@@ -48,12 +39,32 @@ body {
 
 .game-input {
 	width: 250px;
-	height: 250px;
 	margin: 0 auto;
+	display: block;
 }
 
 .game-info {
 	font-weight: bold;
 	width: 250px;
 	margin: 10px auto 0 auto;
+}
+
+.leaderboard {
+	width: 250px;
+	margin: 15px 0;
+}
+
+.section-left, .section-right {
+	float: left;
+	width: 50%;
+}
+
+@media screen and (max-width: 588px) {
+	.section-left, .section-right {
+		width: 100%;
+	}	
+
+	.leaderboard {
+		margin: 15px auto;
+	}
 }
