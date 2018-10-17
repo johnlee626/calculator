@@ -2,6 +2,7 @@ import React from 'react';
 import Board  from './Board';
 import Leaderboard  from './Leaderboard';
 import { getPlayers, updatePlayer, postPlayer } from '../services/playerService';
+import axios from 'axios';
 
 class Game extends React.Component {
 	constructor(props) {
@@ -70,9 +71,9 @@ class Game extends React.Component {
 	
 	handleClick(i) {
 		const board = this.state.board.slice();
-		let errorMessage;
+		let errorMessage, checkWinner, checkDraw;
 
-		if (this.state.playerOne == "" || this.state.playerTwo == "") {
+		if (this.state.playerOne == "" || this.state.playerTwo == "" || this.state.inputMode == "edit") {
 			errorMessage = <div className="alert alert-danger" role="alert">Please enter all players' name</div>
 			this.setState({ errorMessage: errorMessage });
 			return;
@@ -83,13 +84,44 @@ class Game extends React.Component {
 		}
 		
 		board[i] = this.state.xTurn ? "X" : "O";
+		checkWinner = this.checkWinner(board);
+		checkDraw = board.includes(null) ? false : true;
+		
 		this.setState({
 			board: board,
 			xTurn: !this.state.xTurn,
-			winner: this.checkWinner(board),
-			draw: board.includes(null) ? false : true
+			winner: checkWinner,
+			draw: checkDraw
 		});
 
+		if (checkWinner == "X") {
+			updatePlayer(this.state.playerOne, "win").then((data) => {
+				this.setState({ leaderboard: data });
+			});
+			
+			updatePlayer(this.state.playerTwo, "loss").then((data) => {
+				this.setState({ leaderboard: data });
+			});
+		}
+		else if (checkWinner == "O") {
+			updatePlayer(this.state.playerTwo, "win").then((data) => {
+				this.setState({ leaderboard: data });
+			});
+			
+			updatePlayer(this.state.playerOne, "loss").then((data) => {
+				this.setState({ leaderboard: data });
+			});	  
+		}
+		else if (checkDraw) {
+			updatePlayer(this.state.playerOne, "draw").then((data) => {
+				this.setState({ leaderboard: data });
+			});
+			
+			updatePlayer(this.state.playerTwo, "draw").then((data) => {
+				this.setState({ leaderboard: data });
+			});
+		}
+		
 	}
 
 	checkWinner(board) {
@@ -112,7 +144,7 @@ class Game extends React.Component {
 		}
 		
 		return null;
-	}
+	}	
 
 	renderPlayerInput() {
 		let display;
@@ -151,21 +183,10 @@ class Game extends React.Component {
 		let status;		
 
 		if (winner) {
-		  status = "The winner is: " + winner + "!!";
-
-		  if (winner == "X") {
-			updatePlayer(playerOne, "win");
-			updatePlayer(playerTwo, "loss");
-		  }
-		  else {
-			updatePlayer(playerTwo, "win");
-			updatePlayer(playerLoss, "loss")	  
-		  }			  
+		  status = "The winner is: " + winner + "!!";		  			  
 		}		
 		else if (draw) {
-		  status = "The game is a draw!!";	
-		  updatePlayer(playerOne, "draw");
-		  updatePlayer(playerTwo, "draw");
+		  status = "The game is a draw!!";			  
 		}
 		else {
 		  status = xTurn ? "Player X's move" : "Player O's move";

@@ -37,67 +37,45 @@ export async function getPlayers(options = {}) {
 /*
   UPDATE Player
 */
-export function updatePlayer(username, result) {
-  axios.get('http://localhost:3000/players?username=' + username)
-    .then(function (response) {
-      
-      // add new user if no user name found
-      if (response.data.length == 0) {
-        let games;
-        
-        if (result == "win") {
-          games = { win: 1, loss: 0, draw: 0 };  
-        }
-        else if (result == "loss") {
-          games = { win: 0, loss: 1, draw: 0 };            
-        }
-        else if (result == "draw") {
-          games = { win: 0, loss: 0, draw: 1 };            
-        }
+export async function updatePlayer(username, result) {
+  const userData = await axios.get('http://localhost:3000/players?username=' + username);
+	  
+  // add new user if no user name found
+  if (userData.data.length == 0) {
+	let games;
+	
+	if (result == "win") {
+	  games = { win: 1, loss: 0, draw: 0 };  
+	}
+	else if (result == "loss") {
+	  games = { win: 0, loss: 1, draw: 0 };            
+	}
+	else if (result == "draw") {
+	  games = { win: 0, loss: 0, draw: 1 };            
+	}
 
-        postPlayer(username, games);
-      }
-      else {
-        // update existing user
-        let id = response.data[0].id;
-        let win = response.data[0].games.win;
-        let loss = response.data[0].games.loss;
-        let draw = response.data[0].games.draw;
+	await postPlayer(username, games);
+  }
+  else {
+	// update existing user
+	let id = userData.data[0].id;
+	let win = userData.data[0].games.win;
+	let loss = userData.data[0].games.loss;
+	let draw = userData.data[0].games.draw;
 
-        if (result == "win") {
-          axios.put('http://localhost:3000/players/' + id, {id, username, games: { win: win + 1, loss, draw }})
-            .then(function (response) {
-
-            })
-            .catch(function (error) {			  
-              throw error
-            });
-
-        }
-        else if (result == "loss") {
-          axios.put('http://localhost:3000/players/' + id, {id, username, games: { win, loss: loss + 1, draw }})
-          .then(function (response) {
-
-          })
-          .catch(function (error) {			  
-            throw error
-          });
-        }
-        else if (result == "draw") {
-          axios.put('http://localhost:3000/players/' + id, {id, username, games: { win, loss, draw: draw + 1 }})
-          .then(function (response) {
-
-          })
-          .catch(function (error) {			  
-            throw error
-          });
-        }
-
-      }
-    })
-    .catch(function (error) {			  
-      throw error
-  });
+	if (result == "win") {
+	  await axios.put('http://localhost:3000/players/' + id, {id, username, games: { win: win + 1, loss, draw }});
+	}
+	else if (result == "loss") {
+	  await axios.put('http://localhost:3000/players/' + id, {id, username, games: { win, loss: loss + 1, draw }});		  
+	}
+	else if (result == "draw") {
+	  await axios.put('http://localhost:3000/players/' + id, {id, username, games: { win, loss, draw: draw + 1 }});		  
+	}	
+  }
+  
+  let leaderboard = await getPlayers({"sort": "games.win", "order": "desc", "limit": "10"});
+  return leaderboard;
 }
 
 
@@ -105,8 +83,8 @@ export function updatePlayer(username, result) {
   POST Players
 */
 
-export function postPlayer(username, games) {
-  axios.post('http://localhost:3000/players', {username, games})
+export async function postPlayer(username, games) {
+  await axios.post('http://localhost:3000/players', {username, games})
     .then(function (response) {
       
     })

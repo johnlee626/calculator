@@ -31,7 +31,7 @@
       "username": "Rachel",
       "games": {
         "win": 4,
-        "loss": 11,
+        "loss": 7,
         "draw": 0
       }
     },
@@ -40,7 +40,7 @@
       "username": "Mike",
       "games": {
         "win": 1,
-        "loss": 0,
+        "loss": 1,
         "draw": 0
       }
     },
@@ -75,7 +75,7 @@
       "id": 7,
       "username": "adam",
       "games": {
-        "win": 20,
+        "win": 15,
         "loss": 8,
         "draw": 9
       }
