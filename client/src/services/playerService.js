@@ -82,7 +82,6 @@ export async function updatePlayer(username, result) {
 /*
   POST Players
 */
-
 export async function postPlayer(username, games) {
   await axios.post('http://localhost:3000/players', {username, games})
     .then(function (response) {

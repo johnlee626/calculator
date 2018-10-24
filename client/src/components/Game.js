@@ -15,6 +15,7 @@ class Game extends React.Component {
 		  board: Array(9).fill(null),
 		  xTurn: true,
 		  winner: null,
+		  winningLine: [],
 		  errorMessage: null,
 		  inputMode: "edit",
 		  playerOne: "",
@@ -37,6 +38,7 @@ class Game extends React.Component {
 			board: newBoard,
 			xTurn: true,
 			winner: null,
+			winningLine: null,
 			draw: false,
 			errorMessage: null,
 			inputMode: "edit",
@@ -139,6 +141,7 @@ class Game extends React.Component {
 		for (let i = 0; i < winningLines.length; i++) {
 			const [a, b, c] = winningLines[i];
 			if (board[a] && board[a] === board[b] && board[a] === board[c]) {	
+			  this.setState({ winningLine: [a, b, c] });
 			  return board[a];
 			}
 		}
@@ -177,7 +180,7 @@ class Game extends React.Component {
 	}
 	
 	render() {
-		const { winner, xTurn, board, playerOne, playerTwo, errorMessage, draw, leaderboard } = this.state;
+		const { winner, xTurn, board, playerOne, playerTwo, errorMessage, draw, leaderboard, winningLine } = this.state;
 		let playerInput = this.renderPlayerInput();
 		let playerName = this.renderPlayerName();		
 		let status;		
@@ -202,6 +205,7 @@ class Game extends React.Component {
 					<div className="game-board">
 						<Board
 							board={board}
+							winningLine={winningLine}
 							onClick={i => this.handleClick(i)}
 						/>
 					</div>

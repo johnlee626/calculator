@@ -8,9 +8,14 @@ class Square extends React.Component {
 
 	render() {
         	return (
-		    <div className="game-square" onClick={() => this.props.onClick()}>
-				{this.props.value}
-			</div>
+				this.props.color ?
+					<div className="game-square color" onClick={() => this.props.onClick()}>
+						{this.props.value}
+					</div> :
+					<div className="game-square" onClick={() => this.props.onClick()}>
+						{this.props.value}
+					</div>
+
         	);
 	}
 }

@@ -59,6 +59,10 @@ body {
 	width: 50%;
 }
 
+.color {
+	background-color: #4099ff;
+}
+
 @media screen and (max-width: 588px) {
 	.section-left, .section-right {
 		width: 100%;
