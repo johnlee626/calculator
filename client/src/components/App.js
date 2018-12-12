@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { hot } from 'react-hot-loader';
-import Game from './Game'
+import Calculator from './Calculator'
 
 const App = () => {
   return (
     <div>
-      <Game />
+      <Calculator />
     </div>
   );
 };

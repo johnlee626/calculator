@@ -4,7 +4,7 @@ import Leaderboard  from './Leaderboard';
 import { getPlayers, updatePlayer, postPlayer } from '../services/playerService';
 import axios from 'axios';
 
-class Game extends React.Component {
+class Calculator extends React.Component {
 	constructor(props) {
 		super(props);
 		this.handleChange = this.handleChange.bind(this);
@@ -12,7 +12,7 @@ class Game extends React.Component {
 		this.renderPlayerName = this.renderPlayerName.bind(this);
 		
 		this.state = {
-		  board: Array(9).fill(null),
+		  board: Array(16).fill(null),
 		  xTurn: true,
 		  winner: null,
 		  winningLine: [],
@@ -20,7 +20,9 @@ class Game extends React.Component {
 		  inputMode: "edit",
 		  playerOne: "",
 		  playerTwo: "",
-		  leaderboard: []
+		  leaderboard: [],
+		  display: 0,
+		  buttons: ['7', '8', '9', '/', '4', '5', '6', '*', '1', '2', '3', '-', '.', '0', '=', '+']
 		};
 	}
 
@@ -180,7 +182,7 @@ class Game extends React.Component {
 	}
 	
 	render() {
-		const { winner, xTurn, board, playerOne, playerTwo, errorMessage, draw, leaderboard, winningLine } = this.state;
+		const { winner, xTurn, display, buttons, playerOne, playerTwo, errorMessage, draw, leaderboard, winningLine } = this.state;
 		let playerInput = this.renderPlayerInput();
 		let playerName = this.renderPlayerName();		
 		let status;		
@@ -198,32 +200,18 @@ class Game extends React.Component {
 		return(
 			<div className="game">
 				<div className="section-left">
-					<div className="game-start">
-						<button className="btn btn-primary" onClick={() => this.handleStart()}>New Game</button>
-					</div>
-					<div className="game-info">{status}</div>
+					<div className="game-info">{display}</div>
 					<div className="game-board">
 						<Board
-							board={board}
+							board={buttons}
 							winningLine={winningLine}
 							onClick={i => this.handleClick(i)}
 						/>
 					</div>
-					<div className="game-input">
-						{errorMessage}
-						<div>{playerInput}</div>
-						<div>{playerName}</div>					
-					</div>
-				</div>
-				<div className="section-right">
-					<div className="leaderboard">
-						<h2>Leaderboard</h2>
-						<Leaderboard leaderboard={leaderboard} />
-					</div>
-				</div>
+				</div>				
 			</div>
 		);
 	}
 }
 
-export default Game;
+export default Calculator;

@@ -12,19 +12,11 @@ class Board extends React.Component {
 		return (
 			<>
 				{this.props.board.map((square, index) => 
-					this.props.winningLine.includes(index) ?
-						<Square
-							key={index}
-							value={square} 
-							color={true}
-							onClick={() => this.props.onClick(index)}
-						/> :
-						<Square
-							key={index}
-							value={square} 
-							color={false}
-							onClick={() => this.props.onClick(index)}
-						/>
+					<Square
+						key={index}
+						value={square} 
+						onClick={() => this.props.onClick(index)}
+					/>
 						
 				)}
 			</>
