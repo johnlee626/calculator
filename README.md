@@ -1,6 +1,6 @@
-# Tic Tac Toe 
+# Calculator
 
-Tic Tac Toe is a simple game where players take turns placing their mark, either an X  (player one) or an O ()player two) on a 3 x 3 grid.  The first player to get three pieces in a row, either horizontally, vertically, or diagonally, wins the game. If at any point in the game either player cannot win, the game ends in a draw.
+Calculator is an app that performs +, -, *, / operations.
 
 ### Setup
 Please make sure you have the following installed locally:
