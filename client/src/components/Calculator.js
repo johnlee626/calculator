@@ -54,7 +54,7 @@ class Calculator extends React.Component {
 		return(
 			<div className="calculator">
 				<div className="section">
-					<div className="calculator-info">{display == "" ? 0 : display }</div>
+					<div className="calculator-info">{ display == "" ? 0 : display }</div>
 					<div className="calculator-grid">
 						<Buttons
 							buttons={buttons}
