@@ -5,6 +5,7 @@ module.exports = {
   entry: [
     'babel-polyfill',
     'webpack-hot-middleware/client',
+    'core-js/es6/array',
     './client/src/index.js'
   ],
   output: {

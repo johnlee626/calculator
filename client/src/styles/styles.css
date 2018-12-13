@@ -1,52 +1,53 @@
+:root {
+	--font-color: black;
+	--border-color: black;
+	--hover-color: #187cee;
+	--button-background: #e0e1e6;
+}
+
 body {
   box-sizing: border-box;
 }
-
-.game-start {
-	width: 250px;
-	margin: 0 auto;
-	padding: 20px 0 0 0;
-}
 	
-.game-board {
+.calculator-grid {
 	display: flex;
-	width: 330px;
-	height: 330px;
+	width: 340px;
+	height: 340px;
 	flex-direction: row;
 	flex-wrap: wrap;
 	justify-content: flex-start;
-	border: 5px solid #ddd;
+	border: 5px solid var(--border-color);
 	margin: 12px auto 24px auto;
+	padding: 5px;
 }
 
-.game-square {
+.calculator-button {
 	height: 80px;
 	width: 80px;
 	box-sizing: border-box;
-	border: 5px solid #ddd;
+	border: 1px solid var(--border-color);
 	font-size: 3em;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	color: #333;
+	color: var(--font-color);
+	background-color: var(--button-background);
 }
 
-.game-square:hover {
+.calculator-button:hover {
   cursor: pointer;
-  background-color: #4099ff;
+  background-color: var(--hover-color);
   color: #fff;
 }
 
-.game-input {
-	width: 250px;
-	margin: 0 auto;
-	display: block;
-}
-
-.game-info {
+.calculator-info {
 	font-weight: bold;
-	width: 250px;
+	font-size: 1.5em;
+	width: 340px;
+	text-align: right;
 	margin: 10px auto 0 auto;
+	padding: 5px;
+	border: 5px solid var(--border-color);
 }
 
 .leaderboard {
@@ -54,8 +55,8 @@ body {
 	margin: 15px 0;
 }
 
-.section-left, .section-right {
-	float: left;
+.section {
+	margin: 0 auto;
 	width: 50%;
 }
 

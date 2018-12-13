@@ -1,6 +1,6 @@
 # Calculator
 
-Calculator is an app that performs +, -, *, / operations.
+Calculator is an app that performs +, -, *, / operations on numbers.
 
 ### Setup
 Please make sure you have the following installed locally:
